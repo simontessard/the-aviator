@@ -134,10 +134,13 @@ function createLights() {
 	// but also the more expensive and less performant
 	shadowLight.shadow.mapSize.width = 2048;
 	shadowLight.shadow.mapSize.height = 2048;
+
+    ambientLight = new THREE.AmbientLight(0xdc8874, .5);
 	
 	// to activate the lights, just add them to the scene
 	scene.add(hemisphereLight);  
 	scene.add(shadowLight);
+    scene.add(ambientLight);
 }
 
 // First let's define a lava object :
@@ -279,7 +282,7 @@ var AirPlane = function() {
 	
 	this.mesh = new THREE.Object3D();
 	
-	// Create the cabin
+    // Create the cabin
 	var geomCockpit = new THREE.BoxGeometry(60,50,50,1,1,1);
 	var matCockpit = new THREE.MeshPhongMaterial({color:Colors.red, flatShading:true});
 	var cockpit = new THREE.Mesh(geomCockpit, matCockpit);
@@ -374,18 +377,15 @@ function loop(){
 }
 
 function updatePlane(){
-
-	// let's move the airplane between -100 and 100 on the horizontal axis, 
-	// and between 25 and 175 on the vertical axis,
-	// depending on the mouse position which ranges between -1 and 1 on both axes;
-	// to achieve that we use a normalize function (see below)
+	var targetY = normalize(mousePos.y,-.75,.75,25, 175);
 	
-	var targetX = normalize(mousePos.x, -1, 1, -100, 100);
-	var targetY = normalize(mousePos.y, -1, 1, 25, 175);
+	// Move the plane at each frame by adding a fraction of the remaining distance
+	airplane.mesh.position.y += (targetY-airplane.mesh.position.y)*0.1;
 
-	// update the airplane's position
-	airplane.mesh.position.y = targetY;
-	airplane.mesh.position.x = targetX;
+	// Rotate the plane proportionally to the remaining distance
+	airplane.mesh.rotation.z = (targetY-airplane.mesh.position.y)*0.0128;
+	airplane.mesh.rotation.x = (airplane.mesh.position.y-targetY)*0.0064;
+
 	airplane.propeller.rotation.x += 0.3;
 }
 
