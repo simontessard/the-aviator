@@ -11,7 +11,7 @@ export default function AirPlane() {
 	this.mesh = new THREE.Object3D();
 	
     // Create the cabin
-	var geomCockpit = new THREE.BoxGeometry(60,50,50,1,1,1);
+	var geomCockpit = new THREE.BoxGeometry(80,50,50,1,1,1);
 	var matCockpit = new THREE.MeshStandardMaterial({color:Colors.red, flatShading:true});
 	var cockpit = new THREE.Mesh(geomCockpit, matCockpit);
 	cockpit.castShadow = true;
@@ -22,7 +22,7 @@ export default function AirPlane() {
 	var geomEngine = new THREE.BoxGeometry(20,50,50,1,1,1);
 	var matEngine = new THREE.MeshStandardMaterial({color:Colors.white, flatShading:true});
 	var engine = new THREE.Mesh(geomEngine, matEngine);
-	engine.position.x = 40;
+	engine.position.x = 50;
 	engine.castShadow = true;
 	engine.receiveShadow = true;
 	this.mesh.add(engine);
@@ -31,7 +31,7 @@ export default function AirPlane() {
 	var geomTailPlane = new THREE.BoxGeometry(15,20,5,1,1,1);
 	var matTailPlane = new THREE.MeshStandardMaterial({color:Colors.red, flatShading:true});
 	var tailPlane = new THREE.Mesh(geomTailPlane, matTailPlane);
-	tailPlane.position.set(-35,25,0);
+	tailPlane.position.set(-42,25,0);
 	tailPlane.castShadow = true;
 	tailPlane.receiveShadow = true;
 	this.mesh.add(tailPlane);
@@ -87,6 +87,6 @@ export default function AirPlane() {
 	blade.castShadow = true;
 	blade.receiveShadow = true;
 	this.propeller.add(blade);
-	this.propeller.position.set(50,0,0);
+	this.propeller.position.set(60,0,0);
 	this.mesh.add(this.propeller);
 };
