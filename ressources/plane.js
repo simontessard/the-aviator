@@ -3,6 +3,7 @@ var Colors = {
 	white:0xd8d0d1,
 	brown:0x59332e,
 	brownDark:0x23190f,
+	dark:0x000000,
 };
 
 export default function AirPlane() {
@@ -34,6 +35,33 @@ export default function AirPlane() {
 	tailPlane.castShadow = true;
 	tailPlane.receiveShadow = true;
 	this.mesh.add(tailPlane);
+
+	// Create the wheels
+	var geomWheelPlane = new THREE.BoxGeometry(25,25,5,1,1,1);
+	var matWheelPlane = new THREE.MeshStandardMaterial({color:Colors.dark, flatShading:true});
+	var WheelPlane = new THREE.Mesh(geomWheelPlane, matWheelPlane);
+	WheelPlane.position.set(15,-25,20);
+	WheelPlane.castShadow = true;
+	WheelPlane.receiveShadow = true;
+
+	var geomWheelPlane2 = new THREE.BoxGeometry(25,25,5,1,1,1);
+	var matWheelPlane2 = new THREE.MeshStandardMaterial({color:Colors.dark, flatShading:true});
+	var WheelPlane2 = new THREE.Mesh(geomWheelPlane2, matWheelPlane2);
+	WheelPlane2.position.set(15,-25,0);
+	WheelPlane2.castShadow = true;
+	WheelPlane2.receiveShadow = true;
+
+	// Create the rims
+	var geomRimWheel = new THREE.BoxGeometry(15,15,6,1,1,1);
+	var matRimWheel = new THREE.MeshStandardMaterial({color:Colors.brownDark, flatShading:true});
+	var RimWheel = new THREE.Mesh(geomRimWheel, matRimWheel);
+	RimWheel.position.set(0,0,0);
+	RimWheel.castShadow = true;
+	RimWheel.receiveShadow = true;
+	WheelPlane.add(RimWheel);
+
+	this.mesh.add(WheelPlane);
+	this.mesh.add(WheelPlane2);
 	
 	// Create the wing
 	var geomSideWing = new THREE.BoxGeometry(40,8,150,1,1,1);
