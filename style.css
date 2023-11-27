@@ -9,6 +9,10 @@
 #container {
 	position: absolute;
 	z-index: 888;
-    top:20%;
+    top:10%;
     left:50%;
+    background-color: black;
+    padding: 1rem;
+    border-radius: 5px;
+    color:white;
 }
