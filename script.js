@@ -1,9 +1,8 @@
+import AirPlane from './plane.js';
+
 var Colors = {
-	red:0xf25346,
 	white:0xd8d0d1,
-	brown:0x59332e,
 	pink:0xF5986E,
-	brownDark:0x23190f,
 	blue:0x68c3c0,
     lava:0xff2500,
 };
@@ -15,10 +14,7 @@ function init() {
 	// set up the scene, the camera and the renderer
 	createScene();
 
-	// add the lights
 	createLights();
-
-	// add the objects
 	createPlane();
 	createLava();
 	createSky();
@@ -107,6 +103,7 @@ function handleWindowResize() {
 var hemisphereLight, shadowLight;
 
 function createLights() {
+    var hemisphereLight, shadowLight, ambientLight;
 	// A hemisphere light is a gradient colored light; 
 	// the first parameter is the sky color, the second parameter is the ground color, 
 	// the third parameter is the intensity of the light
@@ -115,6 +112,8 @@ function createLights() {
 	// A directional light shines from a specific direction. 
 	// It acts like the sun, that means that all the rays produced are parallel. 
 	shadowLight = new THREE.DirectionalLight(0xffffff, 4);
+
+    ambientLight = new THREE.AmbientLight(0xdc8874, .5);
 
 	// Set the direction of the light  
 	shadowLight.position.set(150, 350, 350);
@@ -135,8 +134,6 @@ function createLights() {
 	shadowLight.shadow.mapSize.width = 2048;
 	shadowLight.shadow.mapSize.height = 2048;
 
-    ambientLight = new THREE.AmbientLight(0xdc8874, .5);
-	
 	// to activate the lights, just add them to the scene
 	scene.add(hemisphereLight);  
 	scene.add(shadowLight);
@@ -184,7 +181,7 @@ function createLava(){
 	scene.add(lava.mesh);
 }
 
-Cloud = function(){
+function Cloud(){
 	// Create an empty container that will hold the different parts of the cloud
 	this.mesh = new THREE.Object3D();
 	
@@ -225,7 +222,7 @@ Cloud = function(){
 }
 
 // Define a Sky Object
-Sky = function(){
+function Sky(){
 	// Create an empty container
 	this.mesh = new THREE.Object3D();
 	
@@ -278,64 +275,6 @@ function createSky(){
 	scene.add(sky.mesh);
 }
 
-var AirPlane = function() {
-	
-	this.mesh = new THREE.Object3D();
-	
-    // Create the cabin
-	var geomCockpit = new THREE.BoxGeometry(60,50,50,1,1,1);
-	var matCockpit = new THREE.MeshPhongMaterial({color:Colors.red, flatShading:true});
-	var cockpit = new THREE.Mesh(geomCockpit, matCockpit);
-	cockpit.castShadow = true;
-	cockpit.receiveShadow = true;
-	this.mesh.add(cockpit);
-	
-	// Create the engine
-	var geomEngine = new THREE.BoxGeometry(20,50,50,1,1,1);
-	var matEngine = new THREE.MeshPhongMaterial({color:Colors.white, flatShading:true});
-	var engine = new THREE.Mesh(geomEngine, matEngine);
-	engine.position.x = 40;
-	engine.castShadow = true;
-	engine.receiveShadow = true;
-	this.mesh.add(engine);
-	
-	// Create the tail
-	var geomTailPlane = new THREE.BoxGeometry(15,20,5,1,1,1);
-	var matTailPlane = new THREE.MeshPhongMaterial({color:Colors.red, flatShading:true});
-	var tailPlane = new THREE.Mesh(geomTailPlane, matTailPlane);
-	tailPlane.position.set(-35,25,0);
-	tailPlane.castShadow = true;
-	tailPlane.receiveShadow = true;
-	this.mesh.add(tailPlane);
-	
-	// Create the wing
-	var geomSideWing = new THREE.BoxGeometry(40,8,150,1,1,1);
-	var matSideWing = new THREE.MeshPhongMaterial({color:Colors.red, flatShading:true});
-	var sideWing = new THREE.Mesh(geomSideWing, matSideWing);
-	sideWing.castShadow = true;
-	sideWing.receiveShadow = true;
-	this.mesh.add(sideWing);
-	
-	// propeller
-	var geomPropeller = new THREE.BoxGeometry(20,10,10,1,1,1);
-	var matPropeller = new THREE.MeshPhongMaterial({color:Colors.brown, flatShading:true});
-	this.propeller = new THREE.Mesh(geomPropeller, matPropeller);
-	this.propeller.castShadow = true;
-	this.propeller.receiveShadow = true;
-	
-	// blades
-	var geomBlade = new THREE.BoxGeometry(1,100,20,1,1,1);
-	var matBlade = new THREE.MeshPhongMaterial({color:Colors.brownDark, flatShading:true});
-	
-	var blade = new THREE.Mesh(geomBlade, matBlade);
-	blade.position.set(8,0,0);
-	blade.castShadow = true;
-	blade.receiveShadow = true;
-	this.propeller.add(blade);
-	this.propeller.position.set(50,0,0);
-	this.mesh.add(this.propeller);
-};
-
 var airplane;
 
 function createPlane(){ 
@@ -362,7 +301,6 @@ function handleMouseMove(event) {
 	
 	var ty = 1 - (event.clientY / HEIGHT)*2;
 	mousePos = {x:tx, y:ty};
-
 }
 
 function loop(){
@@ -397,5 +335,4 @@ function normalize(v,vmin,vmax,tmin, tmax){
 	var dt = tmax-tmin;
 	var tv = tmin + (pc*dt);
 	return tv;
-
 }
