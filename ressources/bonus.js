@@ -11,7 +11,9 @@ export default function Bonus() {
     heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
 
     const geometry = new THREE.ShapeGeometry( heartShape );
-    const material = new THREE.MeshBasicMaterial( { color: 0xf2f217 } );
+    const material = new THREE.MeshPhongMaterial( { color: 0xf2f217 } );
     this.mesh = new THREE.Mesh( geometry, material ) ;
+    this.mesh.castShadow = true;
+	this.mesh.receiveShadow = true;
     this.mesh.rotation.z = Math.PI; // Rotate 180 degrees
 }
