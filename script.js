@@ -167,7 +167,7 @@ var bonus;
 
 function createBonus(){
     bonus = new Bonus();
-    bonus.mesh.position.y = 100;
+    bonus.mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
     bonus.mesh.position.x = window.innerWidth / 2; // Start from the right side of the screen
     scene.add(bonus.mesh);
     animateBonus();
@@ -180,6 +180,7 @@ function animateBonus() {
     // If the bonus is out of the screen on the left side, reset its position to the right side
     if (bonus.mesh.position.x < -window.innerWidth / 2) {
         bonus.mesh.position.x = window.innerWidth / 2;
+        bonus.mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
     }
 }
 
@@ -217,6 +218,7 @@ function loop(){
         console.log("Score: " + score);
         scoreBox.textContent = "Score: " + score;
         bonus.mesh.position.x = window.innerWidth / 2; // Reset bonus position
+        bonus.mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
     }
 
 	// update the plane on each frame
