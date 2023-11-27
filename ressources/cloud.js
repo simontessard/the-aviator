@@ -11,7 +11,7 @@ export default function Cloud(){
 	var geom = new THREE.DodecahedronGeometry(20,0);
 	
 	// create a material; a simple white material will do the trick
-	var mat = new THREE.MeshPhongMaterial({
+	var mat = new THREE.MeshStandardMaterial({
 		color:Colors.white,  
 	});
 	

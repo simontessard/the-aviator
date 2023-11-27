@@ -11,7 +11,7 @@ export default function AirPlane() {
 	
     // Create the cabin
 	var geomCockpit = new THREE.BoxGeometry(60,50,50,1,1,1);
-	var matCockpit = new THREE.MeshPhongMaterial({color:Colors.red, flatShading:true});
+	var matCockpit = new THREE.MeshStandardMaterial({color:Colors.red, flatShading:true});
 	var cockpit = new THREE.Mesh(geomCockpit, matCockpit);
 	cockpit.castShadow = true;
 	cockpit.receiveShadow = true;
@@ -19,7 +19,7 @@ export default function AirPlane() {
 	
 	// Create the engine
 	var geomEngine = new THREE.BoxGeometry(20,50,50,1,1,1);
-	var matEngine = new THREE.MeshPhongMaterial({color:Colors.white, flatShading:true});
+	var matEngine = new THREE.MeshStandardMaterial({color:Colors.white, flatShading:true});
 	var engine = new THREE.Mesh(geomEngine, matEngine);
 	engine.position.x = 40;
 	engine.castShadow = true;
@@ -28,7 +28,7 @@ export default function AirPlane() {
 	
 	// Create the tail
 	var geomTailPlane = new THREE.BoxGeometry(15,20,5,1,1,1);
-	var matTailPlane = new THREE.MeshPhongMaterial({color:Colors.red, flatShading:true});
+	var matTailPlane = new THREE.MeshStandardMaterial({color:Colors.red, flatShading:true});
 	var tailPlane = new THREE.Mesh(geomTailPlane, matTailPlane);
 	tailPlane.position.set(-35,25,0);
 	tailPlane.castShadow = true;
@@ -37,7 +37,7 @@ export default function AirPlane() {
 	
 	// Create the wing
 	var geomSideWing = new THREE.BoxGeometry(40,8,150,1,1,1);
-	var matSideWing = new THREE.MeshPhongMaterial({color:Colors.red, flatShading:true});
+	var matSideWing = new THREE.MeshStandardMaterial({color:Colors.red, flatShading:true});
 	var sideWing = new THREE.Mesh(geomSideWing, matSideWing);
 	sideWing.castShadow = true;
 	sideWing.receiveShadow = true;

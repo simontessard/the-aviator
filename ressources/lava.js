@@ -13,7 +13,7 @@ export default function Lava(){
 	geom.applyMatrix4(new THREE.Matrix4().makeRotationX(-Math.PI/2));
 	
 	// create the material 
-	var mat = new THREE.MeshPhongMaterial({
+	var mat = new THREE.MeshStandardMaterial({
 		color:Colors.lava,
 		transparent:true,
 		opacity:.6,
