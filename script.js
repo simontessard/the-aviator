@@ -1,6 +1,7 @@
 import AirPlane from './ressources/plane.js';
 import Lava from './ressources/lava.js';
 import Sky from './ressources/sky.js';
+import Bonus from './ressources/bonus.js';
 
 window.addEventListener('load', init, false);
 
@@ -13,6 +14,7 @@ function init() {
 	createPlane();
 	createLava();
 	createSky();
+	createBonus();
 
 	// start a loop that will update the objects' positions 
 	// and render the scene on each frame
@@ -161,6 +163,26 @@ function createPlane(){
 	scene.add(airplane.mesh);
 }
 
+var bonus;
+
+function createBonus(){
+    bonus = new Bonus();
+    bonus.mesh.position.y = 100;
+    bonus.mesh.position.x = window.innerWidth / 2; // Start from the right side of the screen
+    scene.add(bonus.mesh);
+    animateBonus();
+}
+
+function animateBonus() {
+    requestAnimationFrame(animateBonus);
+    bonus.mesh.position.x -= 2; // Move to the left
+
+    // If the bonus is out of the screen on the left side, reset its position to the right side
+    if (bonus.mesh.position.x < -window.innerWidth / 2) {
+        bonus.mesh.position.x = window.innerWidth / 2;
+    }
+}
+
 var mousePos={x:0, y:0};
 
 function handleMouseMove(event) {
@@ -178,9 +200,24 @@ function handleMouseMove(event) {
 	mousePos = {x:tx, y:ty};
 }
 
+var score = 0;
+
 function loop(){
 	lava.mesh.rotation.z += .005;
 	sky.mesh.rotation.z += .01;
+
+    var airplaneBox = new THREE.Box3().setFromObject(airplane.mesh);
+    var bonusBox = new THREE.Box3().setFromObject(bonus.mesh);
+
+    var scoreBox = document.getElementById('container');
+
+
+    if (airplaneBox.intersectsBox(bonusBox)) {
+        score++;
+        console.log("Score: " + score);
+        scoreBox.textContent = "Score: " + score;
+        bonus.mesh.position.x = window.innerWidth / 2; // Reset bonus position
+    }
 
 	// update the plane on each frame
 	updatePlane();
