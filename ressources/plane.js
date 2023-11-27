@@ -1,3 +1,5 @@
+import Pilot from "./pilot.js";
+
 var Colors = {
 	red:0xf25346,
 	white:0xd8d0d1,
@@ -9,6 +11,11 @@ var Colors = {
 export default function AirPlane() {
 	
 	this.mesh = new THREE.Object3D();
+
+	// Create the pilot
+	var pilot = new Pilot();
+    pilot.mesh.position.set(0, 29, 0);
+    this.mesh.add(pilot.mesh);
 	
     // Create the cabin
 	var geomCockpit = new THREE.BoxGeometry(80,50,50,1,1,1);
