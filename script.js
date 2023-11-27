@@ -2,6 +2,7 @@ import AirPlane from './ressources/plane.js';
 import Lava from './ressources/lava.js';
 import Sky from './ressources/sky.js';
 import Bonus from './ressources/bonus.js';
+import Bird from './ressources/bird.js';
 
 window.addEventListener('load', init, false);
 
@@ -15,6 +16,7 @@ function init() {
 	createLava();
 	createSky();
 	createBonus();
+    createMalus();
 
 	// start a loop that will update the objects' positions 
 	// and render the scene on each frame
@@ -184,6 +186,26 @@ function animateBonus() {
     }
 }
 
+var malus;
+
+function createMalus(){
+    malus = new Bird();
+    malus.mesh.position.y = Math.random() * 150 + 50;
+    malus.mesh.position.x = window.innerWidth / 2;
+    scene.add(malus.mesh);
+    animateMalus();
+}
+
+function animateMalus() {
+    requestAnimationFrame(animateMalus);
+    malus.mesh.position.x -= 3;
+
+    if (malus.mesh.position.x < -window.innerWidth / 2) {
+        malus.mesh.position.x = window.innerWidth / 2;
+        malus.mesh.position.y = Math.random() * 150 + 50;
+    }
+}
+
 var mousePos={x:0, y:0};
 
 function handleMouseMove(event) {
@@ -209,9 +231,9 @@ function loop(){
 
     var airplaneBox = new THREE.Box3().setFromObject(airplane.mesh);
     var bonusBox = new THREE.Box3().setFromObject(bonus.mesh);
+    var malusBox = new THREE.Box3().setFromObject(malus.mesh);
 
     var scoreBox = document.getElementById('container');
-
 
     if (airplaneBox.intersectsBox(bonusBox)) {
         score++;
@@ -219,6 +241,14 @@ function loop(){
         scoreBox.textContent = "Score: " + score;
         bonus.mesh.position.x = window.innerWidth / 2; // Reset bonus position
         bonus.mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
+    }
+
+    if (airplaneBox.intersectsBox(malusBox)) {
+        score--;
+        console.log("Score: " + score);
+        scoreBox.textContent = "Score: " + score;
+        malus.mesh.position.x = window.innerWidth / 2; // Reset bonus position
+        malus.mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
     }
 
 	// update the plane on each frame
