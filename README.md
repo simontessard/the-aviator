@@ -6,13 +6,13 @@ The game is made for desktop-only use.
 
 To run the project, simply clone it.
 
-## Included
+## - Included
 
 - There is only one bonus and malus that appear at the same time
 - Bonus increase score by 1
 - Malus decrease score by 1
 
-### Left to do
+## - Left to do
 
 - Particles effet on collision
 - Effect with text on bonus
@@ -20,4 +20,4 @@ To run the project, simply clone it.
 - Life system
 - Show rules
 - Better models
-- Shadows for bonus
+- Airplane controls with arrows
