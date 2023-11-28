@@ -17,16 +17,16 @@
 }
 
 #score, #life {
-	background-color: red;
+	background-color: white;
 	padding: 1rem;
     border-radius: 5px;
-	color: white;
+	color: black;
 	width: fit-content;
 }
 
 #score {
-	background-color: #f2f217;
-	color: black;
+	background-color: #173AD4;
+	color: white;
 }
 
 #playButton {

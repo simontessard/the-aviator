@@ -1,5 +1,5 @@
 var Colors = {
-    lava:0xff2500,
+    lava:0x68c3c0,
 };
 
 export default function Lava(){

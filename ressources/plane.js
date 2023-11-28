@@ -1,7 +1,7 @@
 import Pilot from "./pilot.js";
 
 var Colors = {
-	red:0xf25346,
+	blue:0x173AD4,
 	white:0xd8d0d1,
 	brown:0x59332e,
 	brownDark:0x23190f,
@@ -19,7 +19,7 @@ export default function AirPlane() {
 	
     // Create the cabin
 	var geomCockpit = new THREE.BoxGeometry(80,50,50,1,1,1);
-	var matCockpit = new THREE.MeshStandardMaterial({color:Colors.red, flatShading:true});
+	var matCockpit = new THREE.MeshStandardMaterial({color:Colors.blue, flatShading:true});
 	var cockpit = new THREE.Mesh(geomCockpit, matCockpit);
 	cockpit.castShadow = true;
 	cockpit.receiveShadow = true;
@@ -36,7 +36,7 @@ export default function AirPlane() {
 	
 	// Create the tail
 	var geomTailPlane = new THREE.BoxGeometry(15,20,5,1,1,1);
-	var matTailPlane = new THREE.MeshStandardMaterial({color:Colors.red, flatShading:true});
+	var matTailPlane = new THREE.MeshStandardMaterial({color:Colors.blue, flatShading:true});
 	var tailPlane = new THREE.Mesh(geomTailPlane, matTailPlane);
 	tailPlane.position.set(-42,25,0);
 	tailPlane.castShadow = true;
@@ -72,7 +72,7 @@ export default function AirPlane() {
 	
 	// Create the wing
 	var geomSideWing = new THREE.BoxGeometry(40,8,150,1,1,1);
-	var matSideWing = new THREE.MeshStandardMaterial({color:Colors.red, flatShading:true});
+	var matSideWing = new THREE.MeshStandardMaterial({color:Colors.blue, flatShading:true});
 	var sideWing = new THREE.Mesh(geomSideWing, matSideWing);
 	sideWing.castShadow = true;
 	sideWing.receiveShadow = true;
