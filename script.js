@@ -13,13 +13,24 @@ function init() {
 	createPlane();
 	createLava();
 	createSky();
-	createBonus();
-    createMalus();
 	// start a loop that will update the objects' positions 
 	// and render the scene on each frame
     document.addEventListener('mousemove', handleMouseMove, false);
 	loop();
     renderer.render(scene, camera);
+}
+
+document.getElementById('playButton').addEventListener('click', startGame);
+var scoreBox = document.getElementById('container');
+scoreBox.style.display = 'none';
+
+
+function startGame() {
+    createBonus();
+    createMalus();
+    // Hide the play button
+    document.getElementById('playButton').style.display = 'none';
+	scoreBox.style.display = 'block';
 }
 
 var scene, camera, fieldOfView, aspectRatio, nearPlane, farPlane, HEIGHT, WIDTH, renderer, container;
@@ -238,7 +249,6 @@ function loop(){
 	sky.mesh.rotation.z += .01;
 
     var airplaneBox = new THREE.Box3().setFromObject(airplane.mesh);
-    var scoreBox = document.getElementById('container');
 
 	for (var i = 0; i < bonusArray.length; i++) { // Check each bonus
         var bonusBox = new THREE.Box3().setFromObject(bonusArray[i].mesh);

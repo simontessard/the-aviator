@@ -16,3 +16,16 @@
     border-radius: 5px;
     color:white;
 }
+
+#playButton {
+	position: absolute;
+	z-index: 888;
+    bottom:12%;
+    left:46%;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    color:black;
+	border: 0;
+	cursor: pointer;
+}
