@@ -21,16 +21,18 @@ function init() {
 }
 
 document.getElementById('playButton').addEventListener('click', startGame);
-var scoreBox = document.getElementById('container');
-scoreBox.style.display = 'none';
+var infoBox = document.getElementById('container');
+infoBox.style.display = 'none';
 
+var scoreBox = document.getElementById('score');
+var lifeBox = document.getElementById('life');
 
 function startGame() {
     createBonus();
     createMalus();
     // Hide the play button
     document.getElementById('playButton').style.display = 'none';
-	scoreBox.style.display = 'block';
+	infoBox.style.display = 'flex';
 }
 
 var scene, camera, fieldOfView, aspectRatio, nearPlane, farPlane, HEIGHT, WIDTH, renderer, container;
@@ -242,6 +244,7 @@ function handleMouseMove(event) {
 }
 
 var score = 0;
+var life = 5;
 var isPushedBack = false;
 
 function loop(){
@@ -266,9 +269,9 @@ function loop(){
         var malusBox = new THREE.Box3().setFromObject(malusArray[i].mesh);
 
         if (airplaneBox.intersectsBox(malusBox)) {
-            score--;
-            console.log("Score: " + score);
-            scoreBox.textContent = "Score: " + score;
+            life--;
+            console.log("Life: " + life);
+            lifeBox.textContent = "Life: " + life;
             malusArray[i].mesh.position.x = window.innerWidth / 2; // Reset malus position
             malusArray[i].mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
 
