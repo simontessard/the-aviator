@@ -1,19 +1,24 @@
+var Colors = {
+	blue:0x173AD4,
+    darkBlue:0x021C88,
+};
+
 export default function Bonus() {   
-	const x = 0, y = 0;
-    const heartShape = new THREE.Shape();
-
-    heartShape.moveTo( x + 5, y + 5 );
-    heartShape.bezierCurveTo( x + 5, y + 5, x + 4, y, x, y );
-    heartShape.bezierCurveTo( x - 6, y, x - 6, y + 7,x - 6, y + 7 );
-    heartShape.bezierCurveTo( x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19 );
-    heartShape.bezierCurveTo( x + 12, y + 15.4, x + 16, y + 11, x + 16, y + 7 );
-    heartShape.bezierCurveTo( x + 16, y + 7, x + 16, y, x + 10, y );
-    heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
-
-    const geometry = new THREE.ShapeGeometry( heartShape );
-    const material = new THREE.MeshPhongMaterial( { color: 0x173AD4 } );
-    this.mesh = new THREE.Mesh( geometry, material ) ;
+    const geometry = new THREE.SphereGeometry(6, 32, 16 ); 
+    const material = new THREE.MeshPhongMaterial( { color: Colors.darkBlue } ); 
+    this.mesh = new THREE.Mesh( geometry, material );
     this.mesh.castShadow = true;
-	this.mesh.receiveShadow = true;
-    this.mesh.rotation.z = Math.PI; // Rotate 180 degrees
+    this.mesh.receiveShadow = true;
+
+    // Create a second sphere
+    const secondMaterial = new THREE.MeshPhongMaterial( { color: Colors.blue } ); // Use the new color for the second sphere
+    const secondSphere = new THREE.Mesh(geometry, secondMaterial);
+    secondSphere.position.x = -6; // Position the second sphere next to the first one
+    secondSphere.position.y = -5; // Position the second sphere next to the first one
+    secondSphere.position.z = -1; // Position the second sphere next to the first one
+    secondSphere.castShadow = true;
+    secondSphere.receiveShadow = true;
+
+    // Add the second sphere to the first sphere's mesh
+    this.mesh.add(secondSphere);
 }
