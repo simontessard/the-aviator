@@ -8,16 +8,13 @@ window.addEventListener('load', init, false);
 
 // STRUCTURE
 function init() {
-	// set up the scene, the camera and the renderer
 	createScene();
-
 	createLights();
 	createPlane();
 	createLava();
 	createSky();
 	createBonus();
     createMalus();
-
 	// start a loop that will update the objects' positions 
 	// and render the scene on each frame
     document.addEventListener('mousemove', handleMouseMove, false);
@@ -136,7 +133,7 @@ function createLights() {
 }
 
 // Instantiate the lava and add it to the scene:
-var lava;
+var lava, sky, airplane;
 
 function createLava(){
 	lava = new Lava();
@@ -148,15 +145,11 @@ function createLava(){
 	scene.add(lava.mesh);
 }
 
-var sky;
-
 function createSky(){
 	sky = new Sky();
 	sky.mesh.position.y = -600;
 	scene.add(sky.mesh);
 }
-
-var airplane;
 
 function createPlane(){ 
 	airplane = new AirPlane();
@@ -164,6 +157,8 @@ function createPlane(){
 	airplane.mesh.position.y = 100;
 	scene.add(airplane.mesh);
 }
+
+// BONUS AND MALUS MANAGEMENT
 
 var bonusArray = []; // Create an array to store all the bonus
 
@@ -237,7 +232,6 @@ function handleMouseMove(event) {
 
 var score = 0;
 var isPushedBack = false;
-
 
 function loop(){
 	lava.mesh.rotation.z += .005;
