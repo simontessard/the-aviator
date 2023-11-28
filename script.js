@@ -55,7 +55,7 @@ function createScene() {
 	
 	// Set the position of the camera
 	camera.position.x = 0;
-	camera.position.z = 200;
+	camera.position.z = 220;
 	camera.position.y = 100;
 	
 	// Create the renderer
@@ -224,6 +224,8 @@ function handleMouseMove(event) {
 }
 
 var score = 0;
+var isPushedBack = false;
+
 
 function loop(){
 	lava.mesh.rotation.z += .005;
@@ -249,13 +251,25 @@ function loop(){
         scoreBox.textContent = "Score: " + score;
         malus.mesh.position.x = window.innerWidth / 2; // Reset bonus position
         malus.mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
-    }
 
+		isPushedBack = true;
+    }
+	if (isPushedBack) {
+		PushBack();
+	}
 	// update the plane on each frame
 	updatePlane();
 	
 	renderer.render(scene, camera);
 	requestAnimationFrame(loop);
+}
+
+function PushBack() {
+    airplane.mesh.position.x -= .5; // Decrease the x position
+    setTimeout(function() { 
+            airplane.mesh.position.x += .5; 
+            isPushedBack = false;
+    }, 1000); // Move the plane forward after 1 second
 }
 
 function updatePlane(){
