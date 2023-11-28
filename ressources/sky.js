@@ -1,11 +1,12 @@
 import Cloud from './cloud.js';
+import Sun from './sun.js';
 
 export default function Sky(){
 	// Create an empty container
 	this.mesh = new THREE.Object3D();
 	
 	// choose a number of clouds to be scattered in the sky
-	this.nClouds = 20;
+	this.nClouds = 22;
 	
 	// To distribute the clouds consistently,
 	// we need to place them according to a uniform angle
@@ -39,5 +40,7 @@ export default function Sky(){
 
 		// do not forget to add the mesh of each cloud in the scene
 		this.mesh.add(c.mesh);  
-	}  
+	}
+	var sun = new Sun();
+	this.mesh.add(sun.mesh);
 }
