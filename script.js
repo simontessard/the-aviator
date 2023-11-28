@@ -269,6 +269,10 @@ function loop(){
 	for (var i = 0; i < bonusArray.length; i++) { // Check each bonus
         var bonusBox = new THREE.Box3().setFromObject(bonusArray[i].mesh);
 
+		// Rotate animation for bonus
+		bonusArray[i].mesh.rotation.x += 0.04;
+    	bonusArray[i].mesh.rotation.y += 0.04;
+
         if (airplaneBox.intersectsBox(bonusBox)) {
             score++;
             console.log("Score: " + score);
