@@ -165,44 +165,56 @@ function createPlane(){
 	scene.add(airplane.mesh);
 }
 
-var bonus;
+var bonusArray = []; // Create an array to store all the bonus
 
 function createBonus(){
-    bonus = new Bonus();
-    bonus.mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
-    bonus.mesh.position.x = window.innerWidth / 2; // Start from the right side of the screen
-    scene.add(bonus.mesh);
+    for (var i = 0; i < 3; i++) { // Create 3 bonus
+        var bonus = new Bonus();
+        bonus.mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
+        bonus.mesh.position.x = window.innerWidth / 2 + i * 100; // Spread out the bonus
+        scene.add(bonus.mesh);
+        bonusArray.push(bonus); // Add the bonus to the array
+    }
     animateBonus();
 }
 
 function animateBonus() {
     requestAnimationFrame(animateBonus);
-    bonus.mesh.position.x -= 2; // Move to the left
+    for (var i = 0; i < bonusArray.length; i++) { // Animate each bonus
+        var bonus = bonusArray[i];
+        bonus.mesh.position.x -= 2; // Move to the left
 
-    // If the bonus is out of the screen on the left side, reset its position to the right side
-    if (bonus.mesh.position.x < -window.innerWidth / 2) {
-        bonus.mesh.position.x = window.innerWidth / 2;
-        bonus.mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
+        // If the bonus is out of the screen on the left side, reset its position to the right side
+        if (bonus.mesh.position.x < -window.innerWidth / 2) {
+            bonus.mesh.position.x = window.innerWidth / 2;
+            bonus.mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
+        }
     }
 }
 
-var malus;
+var malusArray = []; // Create an array to store all the malus
 
 function createMalus(){
-    malus = new Bird();
-    malus.mesh.position.y = Math.random() * 150 + 50;
-    malus.mesh.position.x = window.innerWidth / 2;
-    scene.add(malus.mesh);
+    for (var i = 0; i < 5; i++) { // Create 5 malus
+        var malus = new Bird();
+        malus.mesh.position.y = Math.random() * 150 + 50;
+        malus.mesh.position.x = window.innerWidth / 2 + i * 100; // Spread out the malus
+        scene.add(malus.mesh);
+        malusArray.push(malus); // Add the malus to the array
+    }
     animateMalus();
 }
 
 function animateMalus() {
     requestAnimationFrame(animateMalus);
-    malus.mesh.position.x -= 3;
+    for (var i = 0; i < malusArray.length; i++) { // Animate each malus
+        var malus = malusArray[i];
+        malus.mesh.position.x -= 3;
 
-    if (malus.mesh.position.x < -window.innerWidth / 2) {
-        malus.mesh.position.x = window.innerWidth / 2;
-        malus.mesh.position.y = Math.random() * 150 + 50;
+        if (malus.mesh.position.x < -window.innerWidth / 2) {
+            malus.mesh.position.x = window.innerWidth / 2;
+            malus.mesh.position.y = Math.random() * 150 + 50;
+        }
     }
 }
 
@@ -232,27 +244,32 @@ function loop(){
 	sky.mesh.rotation.z += .01;
 
     var airplaneBox = new THREE.Box3().setFromObject(airplane.mesh);
-    var bonusBox = new THREE.Box3().setFromObject(bonus.mesh);
-    var malusBox = new THREE.Box3().setFromObject(malus.mesh);
-
     var scoreBox = document.getElementById('container');
 
-    if (airplaneBox.intersectsBox(bonusBox)) {
-        score++;
-        console.log("Score: " + score);
-        scoreBox.textContent = "Score: " + score;
-        bonus.mesh.position.x = window.innerWidth / 2; // Reset bonus position
-        bonus.mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
+	for (var i = 0; i < bonusArray.length; i++) { // Check each bonus
+        var bonusBox = new THREE.Box3().setFromObject(bonusArray[i].mesh);
+
+        if (airplaneBox.intersectsBox(bonusBox)) {
+            score++;
+            console.log("Score: " + score);
+            scoreBox.textContent = "Score: " + score;
+            bonusArray[i].mesh.position.x = window.innerWidth / 2; // Reset bonus position
+            bonusArray[i].mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
+        }
     }
 
-    if (airplaneBox.intersectsBox(malusBox)) {
-        score--;
-        console.log("Score: " + score);
-        scoreBox.textContent = "Score: " + score;
-        malus.mesh.position.x = window.innerWidth / 2; // Reset bonus position
-        malus.mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
+    for (var i = 0; i < malusArray.length; i++) { // Check each malus
+        var malusBox = new THREE.Box3().setFromObject(malusArray[i].mesh);
 
-		isPushedBack = true;
+        if (airplaneBox.intersectsBox(malusBox)) {
+            score--;
+            console.log("Score: " + score);
+            scoreBox.textContent = "Score: " + score;
+            malusArray[i].mesh.position.x = window.innerWidth / 2; // Reset malus position
+            malusArray[i].mesh.position.y = Math.random() * 150 + 50; // Random y position between 50 and 200
+
+            isPushedBack = true;
+        }
     }
 	if (isPushedBack) {
 		PushBack();
@@ -265,11 +282,11 @@ function loop(){
 }
 
 function PushBack() {
-    airplane.mesh.position.x -= .5; // Decrease the x position
+    airplane.mesh.position.x -= 1.5; // Decrease the x position
     setTimeout(function() { 
-            airplane.mesh.position.x += .5; 
+            airplane.mesh.position.x += 1.5; 
             isPushedBack = false;
-    }, 1000); // Move the plane forward after 1 second
+    }, 300); // Move the plane forward after 1 second
 }
 
 function updatePlane(){
