@@ -20,6 +20,7 @@ function init() {
     renderer.render(scene, camera);
 }
 
+var gameIsLive = false;
 document.getElementById('playButton').addEventListener('click', startGame);
 var infoBox = document.getElementById('container');
 infoBox.style.display = 'none';
@@ -28,6 +29,7 @@ var scoreBox = document.getElementById('score');
 var lifeBox = document.getElementById('life');
 
 function startGame() {
+	gameIsLive = true;
     createBonus();
     createMalus();
     // Hide the play button
@@ -243,6 +245,17 @@ function handleMouseMove(event) {
 	mousePos = {x:tx, y:ty};
 }
 
+function updateCamera() {
+    var airplanePos = {x: airplane.mesh.position.x / window.innerWidth, y: airplane.mesh.position.y / window.innerHeight};
+    var dx = airplanePos.x - mousePos.x;
+    var dy = airplanePos.y - mousePos.y;
+    var distance = Math.sqrt(dx * dx + dy * dy);
+
+    // Adjust the camera position based on the distance
+    // You can adjust the factor 0.01 to get the desired effect
+    camera.position.z = 150 + distance * 100; // Increase the factor to make the effect more noticeable
+}
+
 var score = 0;
 var life = 5;
 var isPushedBack = false;
@@ -283,6 +296,10 @@ function loop(){
 	}
 	// update the plane on each frame
 	updatePlane();
+
+	if (gameIsLive) {
+		updateCamera();
+	}
 	
 	renderer.render(scene, camera);
 	requestAnimationFrame(loop);
